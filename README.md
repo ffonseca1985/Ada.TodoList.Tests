@@ -57,4 +57,5 @@ git push
 ## Vou criar uma branch para deixar na ordem cronologia os estudos
 git checkout -b aula1 => ele cria e vai para a branch aula1
 git add --all
-git commit -m ""
+git commit -m "criado branch aula1"
+git push --set-upstream origin aula1 => mandar para nuvem
