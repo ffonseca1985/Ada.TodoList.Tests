@@ -45,4 +45,13 @@ baixa o visual studio comunity (Gratuito pra estudo!!!!) e cria um projeto*
 
 ## 7 - dividir os projetos em branches
 
+## colocar na area de stage
 git add --all
+
+## versionar
+git commit -m "aula1 criacao de projetos e teoria"
+
+## mandar para a nuvem
+git push
+
+## Vou criar uma branch para deixar na ordem cronologia os estudos
