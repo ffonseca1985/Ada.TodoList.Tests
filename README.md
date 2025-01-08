@@ -55,3 +55,6 @@ git commit -m "aula1 criacao de projetos e teoria"
 git push
 
 ## Vou criar uma branch para deixar na ordem cronologia os estudos
+git checkout -b aula1 => ele cria e vai para a branch aula1
+git add --all
+git commit -m ""
