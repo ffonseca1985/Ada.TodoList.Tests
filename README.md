@@ -1,78 +1,107 @@
 # Ada.TodoList.Tests
 
-Links do excalidraw: <br />
-https://excalidraw.com/#json=Q6F4gE89Hb-B53_amz71r,yP7g0OS0HQNWkMX3QcO1Ew <br />
-https://excalidraw.com/#json=OPI6BU_5jQdz-crVhRxig,5zgyI8uJKrltLvxlPeZSiA <br />
+## Links do Excalidraw
+- [Diagrama 1](https://excalidraw.com/#json=Q6F4gE89Hb-B53_amz71r,yP7g0OS0HQNWkMX3QcO1Ew)
+- [Diagrama 2](https://excalidraw.com/#json=OPI6BU_5jQdz-crVhRxig,5zgyI8uJKrltLvxlPeZSiA)
 
-# Passos
-## 1 - Criar projeto Ada.ToDoList.Domain
+---
 
-dotnet new classlib -n Ada.ToDoList.Domain
+## Passos para Configuração
 
-##   - Qual tipo de template vamos usar? 
-- classlibrary 
+1. Criar o Projeto `Ada.ToDoList.Domain`  
+   Este projeto conterá as entidades e regras de negócio.
 
-## 2 - Criar projeto Ada.ToDoList.Infrastructure (Api e onde vamos inserir os dados)
+   ```bash
+   dotnet new classlib -n Ada.ToDoList.Domain
+   ```
 
-dotnet new webapi -n Ada.ToDoList.Infrastructure --framework net8.0
+   - **Tipo de template:** `classlibrary`
 
-##   - Qual tipo de template vamos usar? 
-- WebApi (Api) e dentro dele pasta de repository
+2. Criar o Projeto `Ada.ToDoList.Infrastructure`  
+   Este será o projeto de infraestrutura, contendo a API e os repositórios para persistência de dados.
 
-## 3 - Criar projeto Ada.TodoList.Tests
+   ```bash
+   dotnet new webapi -n Ada.ToDoList.Infrastructure --framework net8.0
+   ```
 
-dotnet new xunit -n Ada.ToDoList.Tests --framework net8.0
+   - **Tipo de template:** `WebApi`
+   - **Estrutura:** incluir uma pasta para repositórios.
 
-##   - Qual tipo de template vamos usar? 
-- XUnit, porque é mais moderno e etc...
+3. Criar o Projeto de Testes `Ada.ToDoList.Tests`  
+   Este projeto será usado para os testes unitários.
 
-## 4 - Criar a Solution (Agrupa os projetos e centraliza os comando)
-dotnet new sln -n Ada.ToDoList
+   ```bash
+   dotnet new xunit -n Ada.ToDoList.Tests --framework net8.0
+   ```
 
-### 4.1 Depois criar a solution vamos adicionar os projetos nela.
-dotnet sln Ada.ToDoList.sln add .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj
-dotnet sln .\Ada.ToDoList.sln add .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj
-dotnet sln .\Ada.ToDoList.sln add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj
+   - **Tipo de template:** `xUnit` (escolhido por ser moderno e amplamente utilizado).
 
-## 5 - Adicionar as referencias 
-   #### Teste referencia Domain e a Infra
+4. Criar a Solution  
+   A Solution agrupa os projetos e centraliza os comandos.
 
-dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj reference .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj  
-dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj reference .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj
+   ```bash
+   dotnet new sln -n Ada.ToDoList
+   ```
 
-   #### Infra referencia Domain
+   4.1. Adicionar os Projetos à Solution
 
-dotnet add .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj reference .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj
+   ```bash
+   dotnet sln Ada.ToDoList.sln add .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj
+   dotnet sln Ada.ToDoList.sln add .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj
+   dotnet sln Ada.ToDoList.sln add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj
+   ```
 
-### 6 - Lição de casa:
-baixa o visual studio comunity (Gratuito pra estudo!!!!) e cria um projeto*
+5. Adicionar Referências  
 
-## 7 - dividir os projetos em branches
+   - Testes Referenciam `Domain` e `Infrastructure`  
 
-## colocar na area de stage
-git add --all
+     ```bash
+     dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj reference .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj
+     dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj reference .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj
+     ```
 
-## versionar
-git commit -m "aula1 criacao de projetos e teoria"
+   - Infraestrutura Referencia `Domain`  
 
-## mandar para a nuvem
-git push
+     ```bash
+     dotnet add .\Ada.ToDoList.Infrastructure\Ada.ToDoList.Infrastructure.csproj reference .\Ada.ToDoList.Domain\Ada.ToDoList.Domain.csproj
+     ```
 
-## Vou criar uma branch para deixar na ordem cronologia os estudos
-git checkout -b aula1 => ele cria e vai para a branch aula1
-git add --all
-git commit -m "criado branch aula1"
-git push --set-upstream origin aula1 => mandar para nuvem
+6. Lição de Casa  
+   Baixar o **Visual Studio Community** (gratuito para estudos) e criar um projeto.
 
+7. Gerenciar Branches e Controle de Versão  
 
-============================// ========================
+   - Colocar Arquivos na Área de Stage  
 
-Aula 2
+     ```bash
+     git add --all
+     ```
 
-## Xunit
+   - Versionar Alterações  
 
-### Vamos Analisar o básico do XUnit
+     ```bash
+     git commit -m "aula1 criacao de projetos e teoria"
+     ```
 
-## Padroes de nomenclatura de Tests
-## Framework Xunit
-## Resolução de Exercício
+   - Enviar para o Repositório Remoto  
+
+     ```bash
+     git push
+     ```
+
+   - Criar e Enviar uma Nova Branch  
+
+     ```bash
+     git checkout -b aula1
+     git add --all
+     git commit -m "criado branch aula1"
+     git push --set-upstream origin aula1
+     ```
+
+---
+
+## Aula 2: Introdução ao XUnit
+
+- **Conceitos básicos do XUnit**
+- **Padrões de nomenclatura para testes**
+- **Resolução de exercícios**
