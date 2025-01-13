@@ -2,18 +2,29 @@
 // Precisamos importar o xnit
 using Xunit;
 using Ada.ToDoList.Domain.Exemplos;
+using System;
 
 // Padrão:
 // Para classe: NomeClasse + Tests
-public class CalculatorTests {
+public class CalculatorTests : Xunit.IClassFixture<CalculatorClassFixture> {
+
+    //Para usar o ClassFixture (Itens Reutilizaveis) eu injeto ele no construtor 
+    private CalculatorClassFixture _calculatorClassFixtureStateFull; // Mantem o estado
+    private CalculatorClassFixture _calculatorClassFixtureStateLess; // sempre cria um novo estado
+    public CalculatorTests(CalculatorClassFixture calculatorClassFixture)
+    {
+        _calculatorClassFixtureStateFull = calculatorClassFixture;
+        _calculatorClassFixtureStateLess = new CalculatorClassFixture();
+    }
 
     [Theory]
     [InlineData(1, 2, 3)]
     [InlineData(2, 2, 4)]
     public void Somar_Given2Numbers_returnValue(decimal a, decimal b, decimal result) {
+        
         //arrange
-        Calculator calc = new Calculator();
-
+        Calculator calc = _calculatorClassFixtureStateFull.Calculator;
+        
         //act
         decimal res_som = calc.Somar(a, b);
 
@@ -26,7 +37,7 @@ public class CalculatorTests {
     public void Divir_Given2Numbers_returnValue(decimal a, decimal b, decimal result) {
 
         //Arange
-        Calculator calc = new Calculator();
+        Calculator calc = _calculatorClassFixtureStateFull.Calculator;
 
         //act
         //Usand TDD
@@ -38,11 +49,29 @@ public class CalculatorTests {
     }
 
     [Theory]
+    [InlineData(-1, 1)]
+    [InlineData(1, 1)]
+    [InlineData(0.5, 0.5)]
+    [InlineData(-0.5, 0.5)]
+    public void Modulo_Given1Number_ReturnModule(decimal a, decimal m) {
+
+        //Arange
+        Calculator calc = _calculatorClassFixtureStateFull.Calculator;
+
+        //act
+        //Usando TDD
+        decimal mResult = calc.Module(a);
+
+        //Assert
+        Assert.Equal(mResult, m);
+    }    
+
+    [Theory]
     [InlineData(1, 0)]
     public void Dividir_Given2Numbers_ReturnExceptionWhenDenEqualZero(decimal a, decimal b) {
         
         //Arange
-        Calculator calc = new Calculator();
+        Calculator calc = _calculatorClassFixtureStateFull.Calculator;
 
         //Assert
         //Test da exception

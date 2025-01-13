@@ -1,4 +1,6 @@
 
+using System;
+
 namespace Ada.ToDoList.Domain.Exemplos;
 
 //Vamos Fazer o codigo e depois Testar
@@ -24,9 +26,20 @@ public class Calculator {
 
     // Subtracao
 
-    // Resto da divisão de um numero
+    // Resto da divisão de um número
 
     // Modulo
+    public decimal Module(decimal a) {
+
+        //Usando a Lib
+        decimal result = Math.Abs(a);
+
+        //Refatorando...
+        //Quando a definição
+        //decimal definition = Math.Pow(Math.Pow(a, 2), 1/2);
+
+        return result;
+    }
 
     // Raiz => Disparem um exception se o numero for negativo
 }
