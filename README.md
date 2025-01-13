@@ -105,3 +105,9 @@
 - **Conceitos básicos do XUnit**
 - **Padrões de nomenclatura para testes**
 - **Resolução de exercícios**
+
+## Aula 3:
+
+- **ClassFixture**
+- **Conceitos de TDD**
+- **Classes de Domain >> Entities**
