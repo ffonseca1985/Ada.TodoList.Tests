@@ -111,3 +111,14 @@
 - **ClassFixture**
 - **Conceitos de TDD**
 - **Classes de Domain >> Entities**
+
+## Aula 4: 
+
+- **Mock
+- **Libs:
+   *** https://nsubstitute.github.io/
+   *** https://www.codemag.com/Article/2305041/Using-Moq-A-Simple-Guide-to-Mocking-for-.NET
+   *** https://github.com/devlooped/moq
+
+- **instalando pacotes:
+  NSubstitute: dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package NSubstitute   
