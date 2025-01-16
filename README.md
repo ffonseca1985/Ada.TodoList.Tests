@@ -121,6 +121,6 @@
    - https://github.com/devlooped/moq
 
 - **instalando pacotes:**
-   ````
-   bash NSubstitute: dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package NSubstitute 
+   ```bash 
+   NSubstitute: dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package NSubstitute 
    ```
