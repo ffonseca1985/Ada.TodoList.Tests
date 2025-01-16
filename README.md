@@ -114,8 +114,8 @@
 
 ## Aula 4: 
 
-- **Mock
-- **Libs:
+- **Mock**
+- **Libs:**
    - https://nsubstitute.github.io/
    - https://www.codemag.com/Article/2305041/Using-Moq-A-Simple-Guide-to-Mocking-for-.NET
    - https://github.com/devlooped/moq
