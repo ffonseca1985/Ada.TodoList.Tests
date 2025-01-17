@@ -1,4 +1,7 @@
 
+using System.Collections.Generic;
+using System.Drawing;
+using System.Security.Cryptography.X509Certificates;
 using Ada.ToDoList.Domain.Entities;
 using Ada.ToDoList.Domain.Repositories;
 
@@ -25,5 +28,22 @@ public class TaskService {
         return taskResult;
 
         // return task;
+    }
+
+    public Task GetById(int id) {
+        return this._taskRepository.GetById(id);
+    }
+
+    public bool Remove(int id) {
+
+        var searchTask = this.GetById(id);
+        if (searchTask == null) return false;
+
+        var removed = _taskRepository.Remove(id);
+        return removed;
+    }
+
+    public Task AddTaskItem(int taskId, List<string> taskItens) {
+        return null;
     }
 }

@@ -1,16 +1,31 @@
 
+using System.Collections.Generic;
+using System.Linq;
 using Ada.ToDoList.Domain.Entities;
 using Ada.ToDoList.Domain.Repositories;
 using Ada.ToDoList.Domain.Services;
 using NSubstitute;
+using NSubstitute.ReturnsExtensions;
 
 namespace Ada.ToDoList.Tests.Domain.Services;
 
 //Passos - Backlog
 //1 - Create task
 
-public class TaskServiceTests
+public class TaskServiceTests : IClassFixture<TaskServiceClassFixture> 
 {
+    public ITaskRepository _taskRepositoryMock;
+    public TaskService _taskServiceMock;
+
+    public TaskServiceTests(TaskServiceClassFixture taskServiceClassFixture)
+    {
+        _taskRepositoryMock = taskServiceClassFixture.TaskRepository;
+        _taskServiceMock = taskServiceClassFixture.TaskService;
+
+        //Limpando os "ReceivedCalls"
+        _taskRepositoryMock.ClearReceivedCalls();
+    }
+
     //Commands: 
     //Ctrl + a = Seleciona tudo.
     //Ctrl + k + f = Formata o arquivo/classe.
@@ -32,18 +47,18 @@ public class TaskServiceTests
         //O que é um mock? é um objeto que simula a instancia da classe, neste caso o ITaskRepository, 
 
         //O For é o metodo usado para criar a instancia (simualada/mackada)
-        var mockTaskRepository = Substitute.For<ITaskRepository>(); // é um mock/simula a classe/interface
+        //var mockTaskRepository = Substitute.For<ITaskRepository>(); // é um mock/simula a classe/interface
 
         //Eu falei pro mock, como ele deve se comportar??????? Não!!!!
         //Então preciso dizer o que o mock deve fazer!!!
-        mockTaskRepository.Create(task).Returns(task);  //Definido comportamento
+        _taskRepositoryMock.Create(task).Returns(task);  //Definido comportamento
 
         //Criei o mock
-        ITaskRepository taskRepository = mockTaskRepository; 
-        var taskService = new TaskService(taskRepository);
+        //ITaskRepository taskRepository = _taskRepositoryMock; 
+        //var taskService = new TaskService(taskRepository);
 
         //Act
-        var taskResult = taskService.Create(task);      
+        var taskResult = _taskServiceMock.Create(task);      
 
         //Assert
         Assert.Equivalent(task, taskResult); // Valores das propriedades devem ser igual
@@ -52,7 +67,7 @@ public class TaskServiceTests
         //Traduzindo:
         //1 - Que o metodo create foi executado
         //2 - E foi executado exatamente 1 vez
-        mockTaskRepository.Received(1).Create(task);
+        _taskRepositoryMock.Received(1).Create(task);
 
         //Como testar o repository???
         //Formas:
@@ -60,14 +75,107 @@ public class TaskServiceTests
     }
 
     //GetById
+    [Fact]
+    //TDD
+    public void GetById_GivenId_ReturnTask() {
+
+        //TDD => RGR
+        //Arrange
+        var id = 1;
+        var name = "Aprender TDD";
+        var returnTask = new Task(id, name);
+
+        _taskRepositoryMock.GetById(id).Returns(returnTask); //Disse como o meu repository irá se comportar
+
+        //Act
+        var task = _taskServiceMock.GetById(id);
+
+        //Assert
+        Assert.Equivalent(task, returnTask); // Todos os valores serão iguais
+        Assert.NotNull(task);
+
+        _taskRepositoryMock.Received(1).GetById(id);
+    }
 
     //GetAll
 
-    //DeleteTask => Garantir que existe a task
+    //DeleteTask => Garantir que existe a task => return bool
+    [Fact]
+    public void Remove_GivenExistentId_RemoveTask() {
 
-    //AddTaskItem (IdTask, TasKITem) : bool/Exception
+        //TDD => RGR
+        //Arange
+        var id = 1;
+        var name = "Aprender TDD";
+        var returnTask = new Task(id, name);
+        
+        _taskRepositoryMock.GetById(id).Returns(returnTask);
+        _taskRepositoryMock.Remove(id).Returns(true);
+
+        //Act
+        var removed = _taskServiceMock.Remove(id);
+
+        //Assert
+        Assert.True(removed);
+        _taskRepositoryMock.Received(1).GetById(id);
+        _taskRepositoryMock.Received(1).Remove(id);
+    }
+
+    [Fact]
+    public void Remove_GivenNotExistentId_NotRemoveTask() {
+
+        //TDD => RGR
+        //Arange
+        var id = 1;
+        var name = "Aprender TDD";
+        var returnTask = new Task(id, name);
+        
+        _taskRepositoryMock.GetById(id).ReturnsNull();
+        //_taskRepositoryMock.Remove(id).Returns(true);
+
+        //Act
+        var removed = _taskServiceMock.Remove(id);
+
+        //Assert
+        Assert.False(removed);
+        _taskRepositoryMock.Received(1).GetById(id);
+
+        // Como não é para remover, logo, não deve executar o método TaskRepository.Remove
+        _taskRepositoryMock.Received(0).Remove(id); 
+    }
+
+    //AddTaskItem (taskId, description) : bool/Exception
        //Props TaskItem:
            // -  Id : int/string
            // - Description: string
            // - Status: TaskStatus(enum) => NotStarted
+
+    [Fact]
+    public void  AddTaskItem_GivenTaskId_AddOneTaskItem(){
+
+     //TDD > RGR   
+     //Arange
+     int taskId = 1;
+     List<string> taskItens = ["Estudar BDD", "Estudar DDD", "Estudar TDD"];
+
+     Task task = new Task(taskId, "Estudar");
+     task.TaskItems = [];
+
+    _taskRepositoryMock.GetById(taskId).Returns(task);
+    
+     //Act
+     var taskResult = _taskServiceMock.AddTaskItem(taskId, taskItens);
+
+     //Assert
+     Assert.NotNull(taskResult);
+     Assert.True(taskResult.TaskItems.Count == taskItens.Count);
+     
+    _taskRepositoryMock.Received(1).Update(task);
+    _taskRepositoryMock.Received(1).GetById(taskId);
+
+    //Criar as propriedades de TaskItem!!!
+
+     //Todos os itens/description estejam no Taskitnes
+     //Assert.True(taskResult.TaskItems.All(taskItens => taskItens. ))
+    }      
 }
