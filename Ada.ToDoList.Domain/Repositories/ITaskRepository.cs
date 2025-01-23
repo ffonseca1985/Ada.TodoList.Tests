@@ -11,4 +11,5 @@ public interface ITaskRepository : IDisposable {
    Task Create(Task task);
    Task GetById(int id);
    bool Remove(int id);
+   bool Update(Task task);
 }

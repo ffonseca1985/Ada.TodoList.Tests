@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 
 namespace Ada.ToDoList.Domain.Entities;
@@ -19,11 +20,21 @@ public class Task {
     public List<TaskItem> TaskItems { get; set; } // SE não atribuirmos valor a lista ela fica nula
     public List<TaskItem> GetTaskItems() => this.TaskItems;
 
+    public void AddTasks(List<string> taskItens)
+    {
+        //Estudar => FluentValidation
+        if (taskItens == null) throw new ArgumentException("TaskItems is null");
+
+        foreach (var item in taskItens) {
+            this.TaskItems.Add(new TaskItem(item));
+        }
+    }
+
     // public override bool Equals(object? obj)
     // {
     //     if (obj == null) return false; 
     //     var ta1 = (Task)obj;
-        
+
     //     return this.Id == ta1.Id;
     // }
 }

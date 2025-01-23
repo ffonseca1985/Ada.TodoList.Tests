@@ -124,3 +124,10 @@
    ```bash 
    NSubstitute: dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package NSubstitute 
    ```
+
+   ## Aula 6:
+   -- Gera o xml de cobertura
+   dotnet test --collect:"XPlat Code Coverage"
+
+   -- Instala a ferramenta de ler o xml de cobertura
+   dotnet tool install --global dotnet-reportgenerator-globaltool

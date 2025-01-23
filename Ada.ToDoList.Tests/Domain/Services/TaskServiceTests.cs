@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Ada.ToDoList.Domain;
 using Ada.ToDoList.Domain.Entities;
 using Ada.ToDoList.Domain.Repositories;
 using Ada.ToDoList.Domain.Services;
@@ -159,23 +160,31 @@ public class TaskServiceTests : IClassFixture<TaskServiceClassFixture>
      List<string> taskItens = ["Estudar BDD", "Estudar DDD", "Estudar TDD"];
 
      Task task = new Task(taskId, "Estudar");
-     task.TaskItems = [];
+     //task.TaskItems = [];
 
+    // comportamentos
     _taskRepositoryMock.GetById(taskId).Returns(task);
-    
+    _taskRepositoryMock.Update(task).Returns(true);
+
      //Act
-     var taskResult = _taskServiceMock.AddTaskItem(taskId, taskItens);
+     ExecutionResult<Task> executionResult = _taskServiceMock.AddTaskItem(taskId, taskItens);
+     Task taskResult = executionResult.Data!; // !porque ele deve existir!! 
 
      //Assert
      Assert.NotNull(taskResult);
+     Assert.True(executionResult.Success);
+
      Assert.True(taskResult.TaskItems.Count == taskItens.Count);
+     Assert.True(taskResult.TaskItems.All(x => x.Status == TaskStatus.NotStarted));
      
-    _taskRepositoryMock.Received(1).Update(task);
+    _taskRepositoryMock.Received(1).Update(task); // => Precisamos, antes adicionar um comportamento
     _taskRepositoryMock.Received(1).GetById(taskId);
 
     //Criar as propriedades de TaskItem!!!
 
-     //Todos os itens/description estejam no Taskitnes
-     //Assert.True(taskResult.TaskItems.All(taskItens => taskItens. ))
+     //Todos os itens/description estejam no TaskItnes
+     //Para validar, vamos usar linq (c# => System.Linq)
+     Assert.True(taskResult.TaskItems.All((TaskItem x) => taskItens.Contains(x.Description)));
+     Assert.True(taskItens.All(x => taskResult.TaskItems.Select(x => x.Description).Contains(x)));
     }      
 }
