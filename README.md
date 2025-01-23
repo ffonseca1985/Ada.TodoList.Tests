@@ -141,7 +141,7 @@
    dotnet tool install --global dotnet-reportgenerator-globaltool
    ```
 
-      ## Aula 6:
+      ## Aula 7:
       - **Criamos teste de integracao**
       - **Lib**
       ```bash 
