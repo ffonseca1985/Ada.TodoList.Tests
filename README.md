@@ -140,3 +140,10 @@
    ```bash 
    dotnet tool install --global dotnet-reportgenerator-globaltool
    ```
+
+      ## Aula 6:
+      - **Criamos teste de integracao**
+      - **Lib**
+      ```bash 
+      dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing --version 8.0.12
+      ```
