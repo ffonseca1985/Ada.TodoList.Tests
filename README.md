@@ -147,3 +147,14 @@
       ```bash 
       dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing --version 8.0.12
       ```
+
+      Aula 8:
+      **Resolucao de Exercicios**
+      - Tem uma biblioteca que deixa o seu teste mais legivel, mas natural, mais Fluente.
+      https://fluentassertions.com/introduction
+
+      (Em caso de compatibilidade, entrem no nuget.org, procurem o pacote e veriquem!!!)
+
+      ```bash
+      dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package FluentAssertions --version 7.0.0
+      ```

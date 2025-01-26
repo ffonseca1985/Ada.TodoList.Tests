@@ -1,5 +1,9 @@
 
 
+using Ada.ToDoList.Domain.Repositories;
+using Ada.ToDoList.Domain.Services;
+using Ada.ToDoList.Infrastructure.Repositories;
+
 namespace Ada.ToDoList.Infrastructure;
 
 //A api de test, irá deixar a classe Startup dinamica, ou seja, poderá mudar, connection string,
@@ -22,6 +26,8 @@ public class Startup {
         services.AddSwaggerGen();
 
         //Registro do nossa inteface de Repositorio => ITaskRepository
+        services.AddSingleton<TaskService>();
+        services.AddSingleton<ITaskRepository, TasKRepository>();
     }
 
     //Pipeline de Requisições Http (Middlewares)

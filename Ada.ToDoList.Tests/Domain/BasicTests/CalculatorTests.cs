@@ -3,6 +3,8 @@
 using Xunit;
 using Ada.ToDoList.Domain.Exemplos;
 using System;
+using FluentAssertions;
+using NSubstitute.ExceptionExtensions;
 
 // Padrão:
 // Para classe: NomeClasse + Tests
@@ -30,6 +32,10 @@ public class CalculatorTests : Xunit.IClassFixture<CalculatorClassFixture> {
 
         //assert
         Assert.Equal(result, res_som);
+
+        //Usando FluentAssertions
+        result.Should().BePositive().And.Be(res_som); //Be equalente ao Equals do Assert/Equivalent
+        result.Should().Be(result);
     }
 
     [Theory]
@@ -46,6 +52,9 @@ public class CalculatorTests : Xunit.IClassFixture<CalculatorClassFixture> {
 
         //assert
         Assert.Equal(result, res_div);
+
+        //Usando Fluent Assertion
+        b.Should().NotBe(0);//O b não é zero!
     }
 
     [Theory]
@@ -73,9 +82,16 @@ public class CalculatorTests : Xunit.IClassFixture<CalculatorClassFixture> {
         //Arange
         Calculator calc = _calculatorClassFixtureStateFull.Calculator;
 
+        //Act
+        Action action = () => calc.Dividir(a, b);
+
         //Assert
         //Test da exception
-        Assert.Throws<DivideByZeroException>(() => calc.Dividir(a, b));
+        //Assert.Throws<DivideByZeroException>(() => calc.Dividir(a, b));
+        Assert.Throws<DivideByZeroException>(action);
+
+        //Usando FluentAssertion
+        action.Should().Throw<DivideByZeroException>().WithMessage("O denomindor é igual a zero!!!");
     }
 
     //Padrão Para método

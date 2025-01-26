@@ -11,6 +11,7 @@
 
 using Ada.ToDoList.Domain.Repositories;
 using Ada.ToDoList.Infrastructure;
+using Ada.ToDoList.Tests.Infrastructure.Repository;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +28,16 @@ public class CustomStartupWebApplicationFactory : WebApplicationFactory<Startup>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         //Podemos aqui adicionar outros services        
-        base.ConfigureWebHost(builder);
+        base.ConfigureWebHost(builder); //Mantem o que já estava, mas agora vamos acrescentar mais alguma coisa.
+
+        builder.ConfigureServices(services => {
+
+            //Aqui, vamos registrar os serviços, de Test.
+            //Infra que tem objetos de DEV, InMemory etc..
+
+            //No exemplo abaixo, vamos usar o mock de taskRepository
+            services.AddSingleton<ITaskRepository, TaskRepositoryMock>();
+        });
     }
 }
 
