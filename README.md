@@ -159,6 +159,6 @@
    dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package FluentAssertions --version 7.0.0
    ```
 
-   ## Aula 8:
+   ## Aula 9:
    **Resolucao de Exercicios**
    **Finalizacao**
