@@ -136,7 +136,7 @@
    dotnet test --collect:"XPlat Code Coverage"
    ```
 
-   - ***Instala a ferramenta de ler o xml de cobertura***
+   - **Instala a ferramenta de ler o xml de cobertura**
    ```bash 
    dotnet tool install --global dotnet-reportgenerator-globaltool
    ```
@@ -148,7 +148,7 @@
    dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing --version 8.0.12
    ```
 
-   Aula 8:
+   ## Aula 8:
    **Resolucao de Exercicios**
    - Tem uma biblioteca que deixa o seu teste mais legivel, mas natural, mais Fluente.
    https://fluentassertions.com/introduction
@@ -158,3 +158,7 @@
    ```bash
    dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package FluentAssertions --version 7.0.0
    ```
+
+   ## Aula 8:
+   **Resolucao de Exercicios**
+   **Finalizacao**
