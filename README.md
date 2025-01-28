@@ -141,20 +141,20 @@
    dotnet tool install --global dotnet-reportgenerator-globaltool
    ```
 
-      ## Aula 7:
-      - **Criamos teste de integracao**
-      - **Lib**
-      ```bash 
-      dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing --version 8.0.12
-      ```
+   ## Aula 7:
+   - **Criamos teste de integracao**
+   - **Lib**
+   ```bash 
+   dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package Microsoft.AspNetCore.Mvc.Testing --version 8.0.12
+   ```
 
-      Aula 8:
-      **Resolucao de Exercicios**
-      - Tem uma biblioteca que deixa o seu teste mais legivel, mas natural, mais Fluente.
-      https://fluentassertions.com/introduction
+   Aula 8:
+   **Resolucao de Exercicios**
+   - Tem uma biblioteca que deixa o seu teste mais legivel, mas natural, mais Fluente.
+   https://fluentassertions.com/introduction
 
-      (Em caso de compatibilidade, entrem no nuget.org, procurem o pacote e veriquem!!!)
+   (Em caso de compatibilidade, entrem no nuget.org, procurem o pacote e veriquem!!!)
 
-      ```bash
-      dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package FluentAssertions --version 7.0.0
-      ```
+   ```bash
+   dotnet add .\Ada.ToDoList.Tests\Ada.ToDoList.Tests.csproj package FluentAssertions --version 7.0.0
+   ```
