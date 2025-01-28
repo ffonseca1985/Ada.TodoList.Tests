@@ -7,7 +7,10 @@
 //3 => Porém a api usará a nossa startup customizada, que é a CustomStartupWebApplicationFactory
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
+using FluentAssertions;
+using Newtonsoft.Json;
 
 namespace Ada.ToDoList.Tests.Infrastructure;
 
@@ -62,4 +65,33 @@ public class TaskIntegrationTests : IClassFixture<CustomStartupWebApplicationFac
     }
 
     //Quero que Façam em casa: Post
+    [Theory]
+    [InlineData(2, "Tarefa 2")]
+    public async System.Threading.Tasks.Task Post_GivenTask_Create(int id, string name) {
+
+        //Arrange
+        HttpClient httpClient = _factory.CreateClient();
+        var task = new Ada.ToDoList.Domain.Entities.Task(id, name);
+
+         var json = JsonConvert.SerializeObject(task);
+         HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+
+        //Act
+        //Inserir // POST
+        var response = await httpClient.PostAsync($"/api/task", content);
+
+        //Assert
+        response.EnsureSuccessStatusCode();
+        ToDoList.Domain.Entities.Task valuePost = (await response.Content.ReadFromJsonAsync<ToDoList.Domain.Entities.Task>())!;
+
+        // Depois de Inserir, valido se de fato cadastrou
+        var responseSearch = await httpClient.GetAsync($"/api/task/{task.Id}");
+        
+        responseSearch.EnsureSuccessStatusCode();
+        ToDoList.Domain.Entities.Task valueGet = (await responseSearch.Content.ReadFromJsonAsync<ToDoList.Domain.Entities.Task>())!;
+
+        valuePost.Should().BeEquivalentTo(valueGet);
+        valuePost.Id.Should().Be(id);
+        valuePost.Name.Should().Be(name);
+    }
 }
